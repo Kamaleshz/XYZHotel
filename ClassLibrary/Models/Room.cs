@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace XYZHotel.Models
+namespace ClassLibrary.Models
 {
     public class Room
     {
@@ -9,7 +9,7 @@ namespace XYZHotel.Models
 
         public int RoomNumber { get; set; }
 
-        public int RoomName { get; set; }
+        public string RoomName { get; set; }
 
         public Hotels? hotels { get; set; }
     }

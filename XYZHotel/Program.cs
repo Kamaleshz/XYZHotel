@@ -1,8 +1,13 @@
 using Microsoft.EntityFrameworkCore;
 using XYZHotel.DB;
+using XYZHotel.Repository;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<HotelsContext>(op => op.UseSqlServer(builder.Configuration.GetConnectionString("con")));
+
+builder.Services.AddScoped<IHotelsRepository, HotelsRepository>();
+
 // Add services to the container.
 
 builder.Services.AddControllers();

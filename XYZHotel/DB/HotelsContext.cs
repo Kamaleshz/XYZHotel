@@ -1,5 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
-using XYZHotel.Models;
+﻿using ClassLibrary.Models;
+using Microsoft.EntityFrameworkCore;
+
 
 namespace XYZHotel.DB
 {

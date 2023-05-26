@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace XYZHotel.Models
+namespace ClassLibrary.Models
 {
     public class Staff
     {
@@ -8,5 +8,7 @@ namespace XYZHotel.Models
         public int StaffId { get; set; }    
 
         public string? StaffName { get; set; }
+
+        public Hotels? Hotels { get; set; }
     }
 }

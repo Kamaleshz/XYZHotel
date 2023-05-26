@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using ClassLibrary.Models;
 
-namespace XYZHotel.Models
+namespace ClassLibrary.Models
 {
     public class Booking
     {

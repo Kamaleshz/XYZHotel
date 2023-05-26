@@ -22,7 +22,7 @@ namespace XYZHotel.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("XYZHotel.Models.Booking", b =>
+            modelBuilder.Entity("ClassLibrary.Models.Booking", b =>
                 {
                     b.Property<int>("BookingId")
                         .ValueGeneratedOnAdd()
@@ -51,7 +51,7 @@ namespace XYZHotel.Migrations
                     b.ToTable("Bookings");
                 });
 
-            modelBuilder.Entity("XYZHotel.Models.Customer", b =>
+            modelBuilder.Entity("ClassLibrary.Models.Customer", b =>
                 {
                     b.Property<int>("CutomerId")
                         .ValueGeneratedOnAdd()
@@ -73,7 +73,7 @@ namespace XYZHotel.Migrations
                     b.ToTable("Customer");
                 });
 
-            modelBuilder.Entity("XYZHotel.Models.Hotels", b =>
+            modelBuilder.Entity("ClassLibrary.Models.Hotels", b =>
                 {
                     b.Property<int>("HotelId")
                         .ValueGeneratedOnAdd()
@@ -93,12 +93,15 @@ namespace XYZHotel.Migrations
                     b.Property<int>("HotelPrice")
                         .HasColumnType("int");
 
+                    b.Property<int>("RoomAvailablity")
+                        .HasColumnType("int");
+
                     b.HasKey("HotelId");
 
                     b.ToTable("hotels");
                 });
 
-            modelBuilder.Entity("XYZHotel.Models.Room", b =>
+            modelBuilder.Entity("ClassLibrary.Models.Room", b =>
                 {
                     b.Property<int>("RoomId")
                         .ValueGeneratedOnAdd()
@@ -106,8 +109,9 @@ namespace XYZHotel.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RoomId"));
 
-                    b.Property<int>("RoomName")
-                        .HasColumnType("int");
+                    b.Property<string>("RoomName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("RoomNumber")
                         .HasColumnType("int");
@@ -122,7 +126,7 @@ namespace XYZHotel.Migrations
                     b.ToTable("Rooms");
                 });
 
-            modelBuilder.Entity("XYZHotel.Models.Staff", b =>
+            modelBuilder.Entity("ClassLibrary.Models.Staff", b =>
                 {
                     b.Property<int>("StaffId")
                         .ValueGeneratedOnAdd()
@@ -143,13 +147,13 @@ namespace XYZHotel.Migrations
                     b.ToTable("Staffs");
                 });
 
-            modelBuilder.Entity("XYZHotel.Models.Booking", b =>
+            modelBuilder.Entity("ClassLibrary.Models.Booking", b =>
                 {
-                    b.HasOne("XYZHotel.Models.Customer", "Customers")
+                    b.HasOne("ClassLibrary.Models.Customer", "Customers")
                         .WithMany("bookings")
                         .HasForeignKey("CustomersCutomerId");
 
-                    b.HasOne("XYZHotel.Models.Hotels", "hotels")
+                    b.HasOne("ClassLibrary.Models.Hotels", "hotels")
                         .WithMany("Bookings")
                         .HasForeignKey("hotelsHotelId");
 
@@ -158,28 +162,30 @@ namespace XYZHotel.Migrations
                     b.Navigation("hotels");
                 });
 
-            modelBuilder.Entity("XYZHotel.Models.Room", b =>
+            modelBuilder.Entity("ClassLibrary.Models.Room", b =>
                 {
-                    b.HasOne("XYZHotel.Models.Hotels", "hotels")
+                    b.HasOne("ClassLibrary.Models.Hotels", "hotels")
                         .WithMany("Rooms")
                         .HasForeignKey("hotelsHotelId");
 
                     b.Navigation("hotels");
                 });
 
-            modelBuilder.Entity("XYZHotel.Models.Staff", b =>
+            modelBuilder.Entity("ClassLibrary.Models.Staff", b =>
                 {
-                    b.HasOne("XYZHotel.Models.Hotels", null)
+                    b.HasOne("ClassLibrary.Models.Hotels", "Hotels")
                         .WithMany("Staffs")
                         .HasForeignKey("HotelsHotelId");
+
+                    b.Navigation("Hotels");
                 });
 
-            modelBuilder.Entity("XYZHotel.Models.Customer", b =>
+            modelBuilder.Entity("ClassLibrary.Models.Customer", b =>
                 {
                     b.Navigation("bookings");
                 });
 
-            modelBuilder.Entity("XYZHotel.Models.Hotels", b =>
+            modelBuilder.Entity("ClassLibrary.Models.Hotels", b =>
                 {
                     b.Navigation("Bookings");
 
