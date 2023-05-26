@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ClassLibrary.Models;
 using XYZHotel.DB;
+using Microsoft.AspNetCore.Authorization;
 
 namespace XYZHotel.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class StaffsController : ControllerBase
