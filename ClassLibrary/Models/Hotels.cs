@@ -19,8 +19,6 @@ namespace XYZHotel.Models
 
         public ICollection<Staff>? Staffs { get; set;}
 
-        public ICollection<Customer>? Customers { get; set;}
-
         public ICollection<Booking>? Bookings { get; set;}
 
 
