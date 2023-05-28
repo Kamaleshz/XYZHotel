@@ -9,6 +9,8 @@ namespace ClassLibrary.Models
 
         public string? StaffName { get; set; }
 
+        public string? StaffPassword { get; set; }
+
         public Hotels? Hotels { get; set; }
     }
 }

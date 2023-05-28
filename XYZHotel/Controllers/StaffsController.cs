@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace XYZHotel.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Staff")]
     [Route("api/[controller]")]
     [ApiController]
     public class StaffsController : ControllerBase
@@ -27,33 +27,42 @@ namespace XYZHotel.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Staff>>> GetStaffs()
         {
-          if (_context.Staffs == null)
-          {
-              return NotFound();
-          }
-            return await _context.Staffs.ToListAsync();
+            var staffs = await _context.Staffs.ToListAsync();
+            var GetStaff = staffs.Select(s => new Staff
+            {
+                StaffId = s.StaffId,
+                StaffName = s.StaffName
+            }).ToList();
+            return GetStaff;
+
         }
 
         // GET: api/Staffs/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Staff>> GetStaff(int id)
+        public async Task<ActionResult<Staff>> GetStaffById(int id)
         {
-          if (_context.Staffs == null)
-          {
-              return NotFound();
-          }
             var staff = await _context.Staffs.FindAsync(id);
 
             if (staff == null)
             {
-                return NotFound();
+                return NotFound(); // Return 404 Not Found if staff with the given ID is not found
             }
 
-            return staff;
+            var staffDetails = new Staff
+            {
+                StaffId = staff.StaffId,
+                StaffName = staff.StaffName
+                // Add any other properties you want to retrieve
+            };
+
+            return staffDetails;
         }
+
+
 
         // PUT: api/Staffs/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [Authorize]
         [HttpPut("{id}")]
         public async Task<IActionResult> PutStaff(int id, Staff staff)
         {
@@ -99,6 +108,7 @@ namespace XYZHotel.Controllers
         }
 
         // DELETE: api/Staffs/5
+        [Authorize]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteStaff(int id)
         {

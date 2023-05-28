@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using XYZHotel.DB;
 using XYZHotel.Repository;
 
 namespace XYZHotel.Controllers
@@ -60,9 +62,6 @@ namespace XYZHotel.Controllers
             return availableSeats;
         }
 
-
-
-
         [HttpGet("/filter/location")]
         public IEnumerable<Hotels> GetLocation(string location)
         {
@@ -77,6 +76,20 @@ namespace XYZHotel.Controllers
         public IEnumerable<Hotels> GetPrice(int price)
         {
             return er.GetPrice(price);
+        }
+        //Filtering all together
+        [HttpGet("/full_filter")]
+        public ActionResult<IEnumerable<Hotels>> Filter(string location, int price, string amenities)
+        {
+            try
+            {
+                var filteredHotels = er.FilterHotels(location, price, amenities);
+                return Ok(filteredHotels);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while filtering hotels.");
+            }
         }
     }
 }

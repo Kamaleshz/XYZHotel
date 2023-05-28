@@ -6,7 +6,6 @@ using XYZHotel.Repository;
 
 namespace XYZHotel.Controllers
 {
-    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class RoomController : ControllerBase
@@ -17,7 +16,7 @@ namespace XYZHotel.Controllers
         {
             this.hr = hr;
         }
-
+        [Authorize(Roles = "Staff")]
         [HttpGet]
         public ActionResult<IEnumerable<Room>> GetRoom()
         {
@@ -25,13 +24,14 @@ namespace XYZHotel.Controllers
             {
                 return Ok(hr.GetRoom());
             }
-            catch (Exception ex)
+            catch (Exception)
             {
 
                 return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while retrieving hotels.");
             }
         }
 
+        [Authorize(Roles = "Staff,Customer")]
         [HttpGet("{id}")]
         public ActionResult<Room> GetRoomByid(int id)
         {
@@ -44,13 +44,14 @@ namespace XYZHotel.Controllers
                 }
                 return Ok(rooms);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
 
                 return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while retrieving the hotel.");
             }
         }
-
+        
+        [Authorize(Roles = "Staff")]
         [HttpPost]
         public ActionResult<Room> Post(Room room)
         {
@@ -58,13 +59,14 @@ namespace XYZHotel.Controllers
             {
                 return Ok(hr.PostRoom(room));
             }
-            catch (Exception ex)
+            catch (Exception)
             {
 
                 return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while creating the hotel.");
             }
         }
-
+        
+        [Authorize(Roles = "Staff")]
         [HttpPut("{id}")]
         public IActionResult Put(int id, Room room)
         {
@@ -73,13 +75,14 @@ namespace XYZHotel.Controllers
                 hr.PutRoom(room);
                 return NoContent();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
 
                 return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while updating the hotel.");
             }
         }
 
+        [Authorize(Roles = "Staff")]
         [HttpDelete("{id}")]
         public IActionResult DeleteRoom(int id)
         {
@@ -88,7 +91,7 @@ namespace XYZHotel.Controllers
                 hr.DeleteRoom(id);
                 return NoContent();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
 
                 return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while deleting the hotel.");

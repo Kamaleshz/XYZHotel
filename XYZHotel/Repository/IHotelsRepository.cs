@@ -17,6 +17,7 @@ namespace XYZHotel.Repository
         int GetAvailableRoomCount(string hotelname);
 
 
+        IEnumerable<Hotels> FilterHotels(string location, int price, string amenities);
 
         IEnumerable<Hotels> GetLocation(string location);
 

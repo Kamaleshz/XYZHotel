@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ClassLibrary.Models;
 using XYZHotel.DB;
+using Microsoft.AspNetCore.Authorization;
 
 namespace XYZHotel.Controllers
 {
+    
     [Route("api/[controller]")]
     [ApiController]
     public class CustomersController : ControllerBase
@@ -22,36 +24,40 @@ namespace XYZHotel.Controllers
         }
 
         // GET: api/Customers
+        [Authorize(Roles ="Staff")]
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Customer>>> GetCustomer()
+        public async Task<ActionResult<Customer>> GetCustomer()
         {
-          if (_context.Customer == null)
-          {
-              return NotFound();
-          }
-            return await _context.Customer.ToListAsync();
+            var customers = await _context.Customer.ToListAsync();
+            var customer = customers.Select(c => new Customer
+            {
+                CutomerId = c.CutomerId,
+                CustomerName = c.CustomerName,
+                CustomerEmail = c.CustomerEmail
+            }).ToList();
+
+            return Ok(customer);
         }
 
-        // GET: api/Customers/5
+        
         [HttpGet("{id}")]
-        public async Task<ActionResult<Customer>> GetCustomer(int id)
+        public async Task<ActionResult<Staff>> GetStaffById(int id)
         {
-          if (_context.Customer == null)
-          {
-              return NotFound();
-          }
-            var customer = await _context.Customer.FindAsync(id);
+            var staff = await _context.Staffs.FindAsync(id);
 
-            if (customer == null)
+            if (staff == null)
             {
                 return NotFound();
             }
 
-            return customer;
+            return staff;
         }
+
+
 
         // PUT: api/Customers/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [Authorize(Roles = "Staff")]
         [HttpPut("{id}")]
         public async Task<IActionResult> PutCustomer(int id, Customer customer)
         {
@@ -97,6 +103,7 @@ namespace XYZHotel.Controllers
         }
 
         // DELETE: api/Customers/5
+        [Authorize]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCustomer(int id)
         {

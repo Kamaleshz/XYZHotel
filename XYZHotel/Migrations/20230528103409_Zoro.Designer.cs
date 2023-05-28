@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using XYZHotel.DB;
 
@@ -11,9 +12,11 @@ using XYZHotel.DB;
 namespace XYZHotel.Migrations
 {
     [DbContext(typeof(HotelsContext))]
-    partial class HotelsContextModelSnapshot : ModelSnapshot
+    [Migration("20230528103409_Zoro")]
+    partial class Zoro
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

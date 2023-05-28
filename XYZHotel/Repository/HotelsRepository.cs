@@ -70,9 +70,30 @@ namespace XYZHotel.Repository
 
         public IEnumerable<Hotels> GetPrice(int price)
         {
-            return HotelContext.hotels.Where(e => e.HotelPrice == price).ToList();
+            return HotelContext.hotels.Where(e => e.HotelPrice <= price).ToList();
         }
 
-        
-}
+        public IEnumerable<Hotels> FilterHotels(string location, int price, string amenities)
+        {
+            var filteredHotels = HotelContext.hotels.ToList();
+
+            if (!string.IsNullOrEmpty(location))
+            {
+                filteredHotels = filteredHotels.Where(h => h.HotelLocation.ToLower() == location.ToLower()).ToList();
+            }
+
+            if (price > 0)
+            {
+                filteredHotels = filteredHotels.Where(h => h.HotelPrice <= price).ToList();
+            }
+
+            if (!string.IsNullOrEmpty(amenities))
+            {
+                var amenitiesList = amenities.Split(',').Select(a => a.Trim().ToLower()).ToList();
+                filteredHotels = filteredHotels.Where(h => amenitiesList.All(a => h.HotelAmenities.ToLower().Contains(a))).ToList();
+            }
+
+            return filteredHotels;
+        }
+    }
 }
