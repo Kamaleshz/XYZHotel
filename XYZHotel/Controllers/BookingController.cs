@@ -38,10 +38,6 @@ namespace XYZHotel.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<ClassLibrary.Models.Booking>> GetBooking(int id)
         {
-          if (_context.Bookings == null)
-          {
-              return NotFound();
-          }
             var booking = await _context.Bookings.FindAsync(id);
 
             if (booking == null)
@@ -57,10 +53,6 @@ namespace XYZHotel.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutBooking(int id, ClassLibrary.Models.Booking booking)
         {
-            if (id != booking.BookingId)
-            {
-                return BadRequest();
-            }
 
             _context.Entry(booking).State = EntityState.Modified;
 
@@ -102,10 +94,6 @@ namespace XYZHotel.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteBooking(int id)
         {
-            if (_context.Bookings == null)
-            {
-                return NotFound();
-            }
             var booking = await _context.Bookings.FindAsync(id);
             if (booking == null)
             {

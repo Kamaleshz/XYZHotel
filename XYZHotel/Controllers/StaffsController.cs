@@ -66,11 +66,6 @@ namespace XYZHotel.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutStaff(int id, Staff staff)
         {
-            if (id != staff.StaffId)
-            {
-                return BadRequest();
-            }
-
             _context.Entry(staff).State = EntityState.Modified;
 
             try
@@ -112,10 +107,6 @@ namespace XYZHotel.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteStaff(int id)
         {
-            if (_context.Staffs == null)
-            {
-                return NotFound();
-            }
             var staff = await _context.Staffs.FindAsync(id);
             if (staff == null)
             {

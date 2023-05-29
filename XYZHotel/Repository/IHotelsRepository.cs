@@ -21,7 +21,6 @@ namespace XYZHotel.Repository
 
         IEnumerable<Hotels> GetLocation(string location);
 
-
         IEnumerable<Hotels> GetAmenities(string amenities);
 
         IEnumerable<Hotels> GetPrice(int price);

@@ -26,7 +26,6 @@ namespace XYZHotel.Controllers
             }
             catch (Exception)
             {
-
                 return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while retrieving hotels.");
             }
         }
